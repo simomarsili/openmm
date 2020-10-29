@@ -546,6 +546,8 @@ class Quantity(object):
         except AttributeError:
             if args or kwargs:
                 raise TypeError('Unsupported arguments for Quantity.max')
+            if len(self) == 1:
+                return self._value
             mymax = max(self._value)
         return Quantity(mymax, self.unit)
 
@@ -566,6 +568,8 @@ class Quantity(object):
         except AttributeError:
             if args or kwargs:
                 raise TypeError('Unsupported arguments for Quantity.min')
+            if len(self) == 1:
+                return self._value
             mymin = min(self._value)
         return Quantity(mymin, self.unit)
 
