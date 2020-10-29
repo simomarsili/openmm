@@ -724,7 +724,10 @@ class Quantity(object):
         """
         Return size of internal value type.
         """
-        return len(self._value)
+        try:
+            return len(self._value)
+        except TypeError:
+            return 1
 
     def __getitem__(self, key):
         """
