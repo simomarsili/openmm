@@ -518,6 +518,8 @@ class Quantity(object):
         except AttributeError:
             if args or kwargs:
                 raise TypeError('Unsupported arguments for Quantity.std')
+            if len(self) == 1:
+                return Quantity(0, self.unit)
             mean = self.mean()._value
             var = 0
             for val in self._value:
