@@ -470,8 +470,10 @@ class Quantity(object):
         except AttributeError:
             if args or kwargs:
                 raise TypeError('Unsupported arguments for Quantity.sum')
-            if len(self._value) == 0:
+            if len(self) == 0:
                 mysum = 0
+            if len(self) == 1:
+                mysum = self._value
             else:
                 mysum = self._value[0]
                 for i in range(1, len(self._value)):
@@ -495,7 +497,7 @@ class Quantity(object):
         except AttributeError:
             if args or kwargs:
                 raise TypeError('Unsupported arguments for Quantity.mean')
-            mean = (self.sum() / len(self._value))._value
+            mean = (self.sum() / len(self))._value
         return Quantity(mean, self.unit)
 
     def std(self, *args, **kwargs):
