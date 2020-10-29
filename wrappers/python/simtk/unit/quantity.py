@@ -497,7 +497,8 @@ class Quantity(object):
         except AttributeError:
             if args or kwargs:
                 raise TypeError('Unsupported arguments for Quantity.mean')
-            mean = (self.sum() / len(self))._value
+            mean = (self.sum() / len(self))
+            mean = mean._value if isinstance(mean, Quantity) else mean
         return Quantity(mean, self.unit)
 
     def std(self, *args, **kwargs):
