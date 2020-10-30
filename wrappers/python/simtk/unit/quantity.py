@@ -448,7 +448,7 @@ class Quantity(object):
         try:
             new_value = pow(self._value, 1/2)
         except TypeError:
-            new_value = [pow(x) for x in self._value]
+            new_value = [pow(x, 1/2) for x in self._value]
         new_unit = self.unit.sqrt()
         unit_factor = self.unit.conversion_factor_to(new_unit*new_unit)
         if unit_factor != 1.0:
