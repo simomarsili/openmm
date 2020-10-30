@@ -450,10 +450,13 @@ class Quantity(object):
         This behavior can be changed if you present a reasonable real life case to me.
         """
         # There might be a conversion factor from taking the square root of the unit
-        try:
-            new_value = math.sqrt(self._value)
-        except TypeError:
-            new_value = [math.sqrt(x) for x in self._value]
+        if numpy_is_installed:
+            # Faster for numpy arrays
+            new_value = numpy.sqrt(self._value)
+            try:
+                math.sqrt(self._value)
+            except TypeError:
+                new_value = [math.sqrt(x) for x in self._value]
         new_unit = self.unit.sqrt()
         unit_factor = self.unit.conversion_factor_to(new_unit*new_unit)
         if unit_factor != 1.0:
