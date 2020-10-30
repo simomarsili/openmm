@@ -77,6 +77,12 @@ import math
 import copy
 from .standard_dimensions import *
 from .unit import Unit, is_unit, dimensionless
+try:
+    import numpy
+except ImportError:
+    numpy_is_installed = False
+else:
+    numpy_is_installed = False
 
 class Quantity(object):
     """Physical quantity, such as 1.3 meters per second.
@@ -145,14 +151,13 @@ class Quantity(object):
                     for item in value:
                         new_container.append(Quantity(item)) # Strips off units into list new_container._value
                     # __class__ trick does not work for numpy.arrays
-                    try:
-                        import numpy
+                    if numpy_is_installed:
                         if isinstance(value, numpy.ndarray):
                             value = numpy.array(new_container._value)
                         else:
                             # delegate contruction to container class from list
                             value = value.__class__(new_container._value)
-                    except ImportError:
+                    else:
                         # delegate contruction to container class from list
                         value = value.__class__(new_container._value)
                 else:
