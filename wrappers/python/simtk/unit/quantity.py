@@ -446,9 +446,9 @@ class Quantity(object):
         """
         # There might be a conversion factor from taking the square root of the unit
         try:
-            new_value = pow(self._value, 1/2)
+            new_value = math.sqrt(self._value)
         except TypeError:
-            new_value = [pow(x, 1/2) for x in self._value]
+            new_value = [math.sqrt(x) for x in self._value]
         new_unit = self.unit.sqrt()
         unit_factor = self.unit.conversion_factor_to(new_unit*new_unit)
         if unit_factor != 1.0:
